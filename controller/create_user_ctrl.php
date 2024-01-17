@@ -8,9 +8,9 @@ if(!empty($_POST["name"]) && !empty($_POST["first_name"])
 
 try {
     $psw = password_hash($_POST["password"], PASSWORD_ARGON2I);
-    $sql = "INSERT INTO user (name, first_name, password, job, caterer) VALUES (?,?,?,?,?) " ; 
+    $sql = "INSERT INTO user (name, first_name, job, caterer, password) VALUES (?,?,?,?,?) " ; 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$_POST["name"], $_POST["first_name"], $psw, $_POST["job"], (int)$_POST["caterer"]]);
+    $stmt->execute([$_POST["name"], $_POST["first_name"], $_POST["job"], (int)$_POST["caterer"], $psw]);
     sendMessage("Utilisateur créer","success","../view/create_user.php");
 } catch (Exception $error) {
     sendMessage($e->getMessage(),"failed","../view/create_user.php");
